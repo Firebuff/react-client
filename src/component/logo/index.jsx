@@ -7,7 +7,7 @@ import './index.less'
 const Logo = function () {
 	return (
 		<div className="logo-wrapper">
-			<img src={LogoImg}/>
+			<img src={LogoImg} alt="" />
 		</div>
 	) 
 }

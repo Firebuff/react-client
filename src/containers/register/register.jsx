@@ -1,6 +1,6 @@
 import React, { Component } from  'react'
 
-import { NavBar, List, InputItem, WingBlank, Radio } from 'antd-mobile'; 
+import { NavBar, List, InputItem, WingBlank, Radio, Button, WhiteSpace } from 'antd-mobile'; 
 
 import Logo from '@/component/logo/index'
 
@@ -35,6 +35,9 @@ class Register extends Component {
 			console.log(this.state)
 		})
 		// console.log(val, type)
+	}
+	toLogin () {
+		this.props.history.replace('/login')
 	}
 	render () {
 
@@ -84,7 +87,11 @@ class Register extends Component {
 						</div>
 					</List>
 				</WingBlank>
-				
+				<WhiteSpace />
+				<div>
+					<Button type="primary">注册</Button><WhiteSpace />
+					<Button onClick={ () => { this.toLogin() }  }>已有账户</Button><WhiteSpace />
+				</div>
 			</div>
 		) 
 	}
