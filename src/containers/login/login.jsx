@@ -1,10 +1,22 @@
 import React, { Component } from  'react'
 
+import { connect } from 'react-redux'
+
 import { NavBar, List, InputItem, WingBlank, Button, WhiteSpace } from 'antd-mobile'; 
 
 import Logo from '@/component/logo/index'
 
-class Register extends Component {
+
+import { login } from '@/redux/actions'
+
+
+
+
+
+
+
+class Login extends Component {
+
 	constructor () {
 		super()
 		this.state = {
@@ -47,4 +59,19 @@ class Register extends Component {
 		) 
 	}
 }
-export default Register
+
+function mapStateToProps (state) {
+	return {
+		user: state.user
+	}
+}
+
+function mapDispatchToProps (state) {
+	return {login: login}
+}
+
+
+export default connect(
+  state => ({user: state.user}),
+  {login}
+)(Login)

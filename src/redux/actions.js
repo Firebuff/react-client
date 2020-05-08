@@ -10,6 +10,9 @@ import {
 } from './action-types'
 
 
+
+/* 同步action */
+
 // const authSuccess =  user => ({type: AUTH_SUCCESS, data: user})
 const authSuccess =  function (user) {
     return {
@@ -26,6 +29,10 @@ const errorMsg = function (msg) {
 }
 
 
+/*
+    异步action
+ */
+
 // login action
 export const login = (user) => {
     const {username, password} = user
@@ -36,15 +43,18 @@ export const login = (user) => {
         return errorMsg('密码必须指定')
     }
 
-    return asyn dispatch => {
+    /*return async dispatch => {
+
         const reponse = await reqLogin(uer)
+
         const result = response.data
+        
         if (result.code == 1) {
             getMsgList(dispatch, result.data._id)
             dispatch(authSuccess(result.data))
         } else {
             dispatch()
         }
-    }
+    }*/
 }
 
