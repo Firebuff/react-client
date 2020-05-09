@@ -23,7 +23,7 @@ const authSuccess =  function (user) {
 
 const errorMsg = function (msg) {
     return {
-        type: 'ERROR_MSG',
+        type: ERROR_MSG,
         data: msg
     }
 }
@@ -35,13 +35,29 @@ const errorMsg = function (msg) {
 
 // login action
 export const login = (user) => {
-    const {username, password} = user
-
-    if (!username) {
-        return errorMsg('用户名必须指定')
-    } else if (!password) {
-        return errorMsg('密码必须指定')
+    return {
+        type: ERROR_MSG,
+        data: 'dsgdgd'
     }
+
+    // console.log(user)
+    // const {username, password} = user
+
+    // if (!username) {
+    //     console.log(88)
+    //     // return errorMsg('用户名必须指定')
+        
+       
+    //         return dispatch => {
+    //             setTimeout(() => {
+    //                 dispatch(errorMsg('用户名必须指定'))
+    //             },5000)
+    //         }
+        
+
+    // } else if (!password) {
+    //     return errorMsg('密码必须指定')
+    // }
 
     /*return async dispatch => {
 
