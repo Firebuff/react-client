@@ -37,7 +37,6 @@ const initUser = {
 
 // reducer01
 function user (state = initUser, action) {
-    console.log(action)
     switch (action.type) {
         
         case AUTH_SUCCESS:

@@ -9,12 +9,6 @@ import Logo from '@/component/logo/index'
 
 import { login } from '@/redux/actions'
 
-
-
-
-
-
-
 class Login extends Component {
 
 	constructor () {

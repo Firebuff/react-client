@@ -10,6 +10,9 @@ import {
 } from './action-types'
 
 
+import { postLogin, getList } from '@/api'
+
+
 
 /* 同步action */
 
@@ -35,42 +38,30 @@ const errorMsg = function (msg) {
 
 // login action
 export const login = (user) => {
-    return {
-        type: ERROR_MSG,
-        data: 'dsgdgd'
+   
+    const {username, password} = user
+
+    if (!username) {
+        return errorMsg('用户名必须指定')
+
+    } else if (!password) {
+        return errorMsg('密码必须指定')
     }
+    
+    return async dispatch => {
 
-    // console.log(user)
-    // const {username, password} = user
-
-    // if (!username) {
-    //     console.log(88)
-    //     // return errorMsg('用户名必须指定')
         
-       
-    //         return dispatch => {
-    //             setTimeout(() => {
-    //                 dispatch(errorMsg('用户名必须指定'))
-    //             },5000)
-    //         }
-        
+        // const response = await postLogin({id:25,name:77})
+        const response = await getList({id:25,name:77})
 
-    // } else if (!password) {
-    //     return errorMsg('密码必须指定')
-    // }
-
-    /*return async dispatch => {
-
-        const reponse = await reqLogin(uer)
-
-        const result = response.data
+        /*const result = response.data
         
         if (result.code == 1) {
-            getMsgList(dispatch, result.data._id)
+            // getMsgList(dispatch, result.data._id)
             dispatch(authSuccess(result.data))
         } else {
             dispatch()
-        }
-    }*/
+        }*/
+    }
 }
 
