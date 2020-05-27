@@ -2,7 +2,10 @@ import React, { Component } from  'react'
 
 import { connect } from 'react-redux'
 
-import { NavBar, List, InputItem, WingBlank, Button, WhiteSpace } from 'antd-mobile'; 
+import { Redirect } from 'react-router-dom'
+
+// ant 组件
+import { NavBar, List, InputItem, WingBlank, Button, WhiteSpace, Toast } from 'antd-mobile'; 
 
 import Logo from '@/component/logo/index'
 
@@ -26,7 +29,7 @@ class Login extends Component {
 		this.setState({
 			params: data
 		}, () => {
-			console.log(this.state)
+			// console.log(this.state)
 		})
 		// console.log(val, type)
 	}
@@ -34,7 +37,12 @@ class Login extends Component {
 		this.props.history.replace('/register')
 	}
 	render () {
-		const { login } = this.props
+		const { login, redirect } = this.props
+
+		// 重定向
+		if (redirect) {
+			return <Redirect to={redirect}/>
+		}
 		return (
 			<div>
 				<NavBar>直聘</NavBar>
@@ -67,7 +75,7 @@ class Login extends Component {
 
 
 export default connect(
-  	state => ({user: state.user}),
+  	state => ({user: state.user, ...state.global}),
   	{login}
 )(Login)
 

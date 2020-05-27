@@ -6,11 +6,14 @@ import {
     RECEIVE_USER_LIST,
     RECEIVE_MSG_LIST,
     RECEIVE_MSG,
-    MSG_READ
+    MSG_READ,
+    SET_REDIRECT
 } from './action-types'
 
+import { Toast } from 'antd-mobile'; 
 
-import { postLogin, getList } from '@/api'
+
+import { postLogin, register } from '@/api'
 
 
 
@@ -31,37 +34,83 @@ const errorMsg = function (msg) {
     }
 }
 
+const setRedirect = function (url) {
+    return {
+        type: SET_REDIRECT,
+        data: url
+    }
+}
+
 
 /*
     异步action
  */
 
-// login action
+// login 登录
 export const login = (user) => {
-   
     const {username, password} = user
-
     if (!username) {
+        Toast.fail('用户名必须指定');
         return errorMsg('用户名必须指定')
 
     } else if (!password) {
+        Toast.fail('密码必须指定');
         return errorMsg('密码必须指定')
     }
     
     return async dispatch => {
 
-        
-        // const response = await postLogin({id:25,name:77})
-        const response = await getList({id:25,name:77})
-
-        /*const result = response.data
-        
-        if (result.code == 1) {
-            // getMsgList(dispatch, result.data._id)
-            dispatch(authSuccess(result.data))
+        const response = await postLogin({username, password})
+      
+        if (!response.code) {
+            dispatch(errorMsg(response.msg))
+            Toast.fail(response.msg);
+            return 
         } else {
-            dispatch()
-        }*/
+            // 登录成功
+            dispatch(errorMsg(response.msg))
+            dispatch(authSuccess(response.data))
+
+            Toast.success(response.msg);
+            // 提示3秒后重定向
+            setTimeout(() => {
+                dispatch(setRedirect('/'))
+            }, 3000)
+        }
+    }
+}
+
+export const register = (user) => {
+    if (!username) {
+        Toast.fail('用户名必须指定');
+        return errorMsg('用户名必须指定')
+
+    } else if (!password) {
+        Toast.fail('密码必须指定');
+        return errorMsg('密码必须指定')
+    } else if (!type) {
+        Toast.fail('请选择注册的用户类型');
+        return errorMsg('请选择注册的用户类型')
+    }
+
+    return async dispatch => {
+        const res = await register(user)
+        if (res.code == 0) {
+            dispatch(errorMsg(res.msg))
+            Toast.fail(res.msg);
+            return
+        }
+
+        // 登录成功
+        dispatch(errorMsg(res.msg))
+        dispatch(authSuccess(res.data))
+
+        Toast.success(res.msg);
+        // 提示3秒后重定向
+        setTimeout(() => {
+            dispatch(setRedirect('/'))
+        }, 3000)
+
     }
 }
 

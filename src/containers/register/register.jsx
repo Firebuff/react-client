@@ -1,8 +1,14 @@
 import React, { Component } from  'react'
 
+import { connect } from 'react-redux'
+
+import { Redirect } from 'react-router-dom'
+
 import { NavBar, List, InputItem, WingBlank, Radio, Button, WhiteSpace } from 'antd-mobile'; 
 
 import Logo from '@/component/logo/index'
+
+import { register } from '@/redux/actions'
 
 class Register extends Component {
 	constructor () {
@@ -97,4 +103,4 @@ class Register extends Component {
 	}
 }
 
-export default Register
+export default connect(state =>({...state.global}), {register})(Register)

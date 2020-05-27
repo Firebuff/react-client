@@ -5,9 +5,13 @@ const instance = axios.create({
 })
 
 export const get = function (url, params) {
-	return instance.get(url, { params: {...params}})
+	return instance.get(url, { params: {...params}}).then ((res) => {
+		return res.data
+	})
 }
 
 export const post = function (url, params) {
-	return instance.post(url, {...params})
+	return instance.post(url, {...params}).then ((res) => {
+		return res.data
+	})
 }

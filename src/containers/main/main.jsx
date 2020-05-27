@@ -14,6 +14,7 @@ class Main extends Component {
 		return (
 			<div>
 				<NavBar>直聘</NavBar>
+				<div>我是主页</div>
 			</div>
 		) 
 	}

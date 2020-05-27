@@ -8,14 +8,13 @@ import {
     RECEIVE_USER_LIST,
     RECEIVE_MSG_LIST,
     RECEIVE_MSG,
-    MSG_READ
+    MSG_READ,
+    SET_REDIRECT
 } from './action-types'
 
 const initUser = {
     username: '',
     type: '',
-    msg: '', // 错误提示信息
-    redirectTo: ''  // 需要自动重定向的路由路径
 }
 
 /*
@@ -34,17 +33,11 @@ const initUser = {
 
  */
 
-
 // reducer01
 function user (state = initUser, action) {
     switch (action.type) {
-        
         case AUTH_SUCCESS:
             return {...action.data}
-
-        case ERROR_MSG: 
-            
-            return {...state, msg: action.data}
         case RECEIVE_USER:
             return action.data
         case RESET_USER:
@@ -55,8 +48,22 @@ function user (state = initUser, action) {
 }
 
 
+const initGlobal = {
+    msg: '', // 错误提示信息
+    redirect: ''  // 需要自动重定向的路由路径
+}
 
+function global (state = initGlobal, action) {
+    switch (action.type) {
+        case ERROR_MSG: 
+            return {...state, msg: action.data} 
+        case SET_REDIRECT: 
+            return {...state, redirect: action.data}
+        default: 
+            return state
+    }
+}
 
 
 // 暴露reducers
-export default combineReducers({user})
+export default combineReducers({user, global})
