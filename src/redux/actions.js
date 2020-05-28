@@ -13,7 +13,7 @@ import {
 import { Toast } from 'antd-mobile'; 
 
 
-import { postLogin, register } from '@/api'
+import { postLogin, registerApi } from '@/api'
 
 
 
@@ -81,6 +81,7 @@ export const login = (user) => {
 }
 
 export const register = (user) => {
+    const {username, password, type, repassword} = user
     if (!username) {
         Toast.fail('用户名必须指定');
         return errorMsg('用户名必须指定')
@@ -88,13 +89,16 @@ export const register = (user) => {
     } else if (!password) {
         Toast.fail('密码必须指定');
         return errorMsg('密码必须指定')
-    } else if (!type) {
+    } else if (repassword != password) {
+        Toast.fail('密码前后不一致');
+        return errorMsg('密码前后不一致')
+    } else if(!type) {
         Toast.fail('请选择注册的用户类型');
         return errorMsg('请选择注册的用户类型')
     }
 
     return async dispatch => {
-        const res = await register(user)
+        const res = await registerApi(user)
         if (res.code == 0) {
             dispatch(errorMsg(res.msg))
             Toast.fail(res.msg);
@@ -105,11 +109,11 @@ export const register = (user) => {
         dispatch(errorMsg(res.msg))
         dispatch(authSuccess(res.data))
 
-        Toast.success(res.msg);
+        Toast.success(res.msg,1);
         // 提示3秒后重定向
         setTimeout(() => {
             dispatch(setRedirect('/'))
-        }, 3000)
+        }, 1000)
 
     }
 }

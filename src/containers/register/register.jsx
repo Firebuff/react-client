@@ -15,7 +15,7 @@ class Register extends Component {
 		super()
 		this.state = {
 			params: {
-				userName: '',
+				username: '',
 				password: '',
 				repassword: '',
 				type: 'boss'
@@ -58,13 +58,19 @@ class Register extends Component {
 				value: 1
 			}
 		]
+		const { register,redirect } = this.props
+
+		if (redirect) {
+			return <Redirect to={redirect}></Redirect>
+		}
+		
 		return (
 			<div>
 				<NavBar>直聘</NavBar>
 				<Logo></Logo>
 				<WingBlank>
 					<List>
-						<InputItem placeholder="请输入用户名" onChange={ (val) => {this.inputHandle(val,'userName')} } value={this.state.params.userName}>用户名：</InputItem>
+						<InputItem placeholder="请输入用户名" onChange={ (val) => {this.inputHandle(val,'username')} } value={this.state.params.username}>用户名：</InputItem>
 						<InputItem placeholder="请输入密码" onChange={ (val) => {  this.inputHandle(val, 'password') } } value={this.state.params.password}>密码：</InputItem>
 						<InputItem placeholder="请确认密码" onChange={ (val) => { this.inputHandle(val,'repassword') } } value={this.state.params.repassword}>确认密码：</InputItem>
 						<div style={ { display: 'flex', justifyContent: 'space-between', lineHeight: '44px',
@@ -95,7 +101,7 @@ class Register extends Component {
 				</WingBlank>
 				<WhiteSpace />
 				<div>
-					<Button type="primary">注册</Button><WhiteSpace />
+					<Button type="primary" onClick={ () => {register(this.state.params)} }>注册</Button><WhiteSpace />
 					<Button onClick={ () => { this.toLogin() }  }>已有账户</Button><WhiteSpace />
 				</div>
 			</div>
