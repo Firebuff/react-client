@@ -27,6 +27,9 @@ class NavFooter extends Component {
 
 	render () {
 		let { navList } = this.props
+
+		let currentPath = this.props.history.location.pathname
+		
 		return (
 			<div style={ {position:'fixed',bottom: 0, width: '100%'} }>
 		        <TabBar
@@ -51,12 +54,10 @@ class NavFooter extends Component {
 			        			      height: '22px',
 			        			      background: `url(${require(`./images/${item.icon}-selected.png`)}) center center /  21px 21px no-repeat` }}
 			        			    />}
-			        			    selected={this.state.selectedTab == index}
-			        			    badge={10}
+			        			    selected={currentPath == item.path}
+			        			    
 			        			    onPress={() => {
-			        			      	this.setState({
-			        			        	selectedTab: index,
-			        			      	});
+			        			      	this.props.history.replace(item.path)
 			        			    }}
 			        			    data-seed="logId"
 			        			  >
@@ -71,4 +72,4 @@ class NavFooter extends Component {
 		)
 	}
 }
-export default NavFooter
+export default withRouter(NavFooter)
