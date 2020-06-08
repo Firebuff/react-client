@@ -1,9 +1,16 @@
 import React, { Component } from  'react'
-import { NavBar } from 'antd-mobile'; 
+
+// ui 组件
+import { NavBar, Toast } from 'antd-mobile'; 
+
 import { connect } from 'react-redux'; 
 import { Redirect } from 'react-router-dom'
 
 import NavFooter from '@/component/navFooter/navFooter'
+
+import { getUserInfo } from '@/redux/actions'
+
+import Cookies from 'js-cookie'
 
 class Main extends Component {
 	constructor () {
@@ -14,7 +21,18 @@ class Main extends Component {
 		// console.log(123)
 	}
 
+	componentDidMount () {
+		
+
+		let CookieId = Cookies.get('userId')
+		// 当redux上面没有用户id 且 cookie中有用户id 才能发起请求
+		if (CookieId && !this.props.user._id) {
+			this.props.getUserInfo()
+		}
+	}
+
 	render () {
+		console.log(7)
 		// 给组件对象添加属性
 		let navList = [ // 包含所有导航组件的相关信息数据
 			{
@@ -52,13 +70,24 @@ class Main extends Component {
 		let currentPath = this.props.history.location.pathname
 		console.log(this.props)
 
-		let userType = this.props.user.type
+		let userType = this.props.user? this.props.user.type : ''
 
-		let userId =  this.props.user._id
-
+		let userId =  this.props.user? this.props.user._id : ''
 
 		if (!userId) {
-			return <Redirect to="/login"></Redirect>
+
+			let cookieUserId = Cookies.get(userId).userId
+			if (cookieUserId) {
+				// this.props.getUserInfo()
+				
+				return null
+    			
+			} else {
+				return <Redirect to="/login"></Redirect>
+			}
+			
+
+			
 		} else {
 			if (currentPath == '/') {
 				// 当路由是 '/' 时要重定向到 老板或者大神的页面，根据当钱用户类型来选择重定向到哪个
@@ -97,4 +126,4 @@ class Main extends Component {
 	}
 }
 
-export default connect(state => ({user: state.user}))(Main)
+export default connect((state) => ({user: state.user}),{getUserInfo})(Main)

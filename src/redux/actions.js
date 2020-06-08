@@ -13,7 +13,7 @@ import {
 import { Toast } from 'antd-mobile'; 
 
 
-import { postLogin, registerApi } from '@/api'
+import { postLogin, registerApi, getUser } from '@/api'
 
 
 
@@ -118,3 +118,16 @@ export const register = (user) => {
     }
 }
 
+
+// 通过cookie 保存的userid自动登录
+export const getUserInfo = () => {
+    return async dispatch => {
+        let res = await getUser()
+        if (res.code == 1) {
+            dispatch(errorMsg(res.msg))
+            dispatch(authSuccess(res.data))
+        } else {
+            dispatch(errorMsg(res.msg))
+        }
+    }
+}
