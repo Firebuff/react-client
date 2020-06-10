@@ -10,31 +10,31 @@ import {
     SET_REDIRECT
 } from './action-types'
 
-import { Toast } from 'antd-mobile'; 
+import { Toast } from 'antd-mobile';
 
 
-import { postLogin, registerApi, getUser } from '@/api'
+import { postLogin, registerApi, getUser, updateUser } from '@/api'
 
 
 
 /* 同步action */
 
 // const authSuccess =  user => ({type: AUTH_SUCCESS, data: user})
-const authSuccess =  function (user) {
+const authSuccess = function(user) {
     return {
         type: AUTH_SUCCESS,
         data: user
     }
 }
 
-const errorMsg = function (msg) {
+const errorMsg = function(msg) {
     return {
         type: ERROR_MSG,
         data: msg
     }
 }
 
-const setRedirect = function (url) {
+const setRedirect = function(url) {
     return {
         type: SET_REDIRECT,
         data: url
@@ -48,7 +48,7 @@ const setRedirect = function (url) {
 
 // login 登录
 export const login = (user) => {
-    const {username, password} = user
+    const { username, password } = user
     if (!username) {
         Toast.fail('用户名必须指定');
         return errorMsg('用户名必须指定')
@@ -57,15 +57,15 @@ export const login = (user) => {
         Toast.fail('密码必须指定');
         return errorMsg('密码必须指定')
     }
-    
+
     return async dispatch => {
 
-        const response = await postLogin({username, password})
-      
+        const response = await postLogin({ username, password })
+
         if (!response.code) {
             dispatch(errorMsg(response.msg))
             Toast.fail(response.msg);
-            return 
+            return
         } else {
             // 登录成功
             dispatch(errorMsg(response.msg))
@@ -74,14 +74,14 @@ export const login = (user) => {
             Toast.success(response.msg);
             // 提示3秒后重定向
             setTimeout(() => {
-                dispatch(setRedirect('/'))
+                dispatch(setRedirect('/update'))
             }, 3000)
         }
     }
 }
 
 export const register = (user) => {
-    const {username, password, type, repassword} = user
+    const { username, password, type, repassword } = user
     if (!username) {
         Toast.fail('用户名必须指定');
         return errorMsg('用户名必须指定')
@@ -92,7 +92,7 @@ export const register = (user) => {
     } else if (repassword != password) {
         Toast.fail('密码前后不一致');
         return errorMsg('密码前后不一致')
-    } else if(!type) {
+    } else if (!type) {
         Toast.fail('请选择注册的用户类型');
         return errorMsg('请选择注册的用户类型')
     }
@@ -109,7 +109,7 @@ export const register = (user) => {
         dispatch(errorMsg(res.msg))
         dispatch(authSuccess(res.data))
 
-        Toast.success(res.msg,1);
+        Toast.success(res.msg, 1);
         // 提示3秒后重定向
         setTimeout(() => {
             dispatch(setRedirect('/'))
@@ -129,5 +129,20 @@ export const getUserInfo = () => {
         } else {
             dispatch(errorMsg(res.msg))
         }
+    }
+}
+
+
+// 更新用户信息
+
+export const updateUserHandle = (params) => {
+    return async dispatch => {
+        let res = await updateUser(params)
+
+        dispatch(errorMsg(res.msg))
+
+        if (res.code == 1) {
+            dispatch(authSuccess(res.data))
+        } 
     }
 }

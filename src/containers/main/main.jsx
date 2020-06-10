@@ -4,13 +4,16 @@ import React, { Component } from  'react'
 import { NavBar, Toast } from 'antd-mobile'; 
 
 import { connect } from 'react-redux'; 
-import { Redirect } from 'react-router-dom'
+import { Redirect, Switch, Route } from 'react-router-dom'
 
 import NavFooter from '@/component/navFooter/navFooter'
 
 import { getUserInfo } from '@/redux/actions'
 
 import Cookies from 'js-cookie'
+
+import Employee from '@/containers/employee'
+import Boss from '@/containers/boss'
 
 class Main extends Component {
 	constructor () {
@@ -119,7 +122,10 @@ class Main extends Component {
 		return (
 			<div>
 				<NavBar>{ navTitle }</NavBar>
-				<div>我是主页</div>
+				<Switch>
+					<Route path="/dashen" component={Employee}></Route>
+					<Route path="/laoban" component={Boss}></Route>
+				</Switch>
 				<NavFooter navList={newNavList}></NavFooter>
 			</div>
 		) 

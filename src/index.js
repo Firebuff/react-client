@@ -11,8 +11,9 @@ import Login from '@/containers/login/login'
 import Main from '@/containers/main/main'
 import Register from '@/containers/register/register'
 
-import Store from '@/redux/store'
+import Update from '@/containers/userinfoUpdate/'
 
+import Store from '@/redux/store'
 
 ReactDOM.render((
     <Provider store={Store}>
@@ -20,6 +21,7 @@ ReactDOM.render((
             <Switch>
                 <Route component={Login} path="/login"></Route>
                 <Route component={Register} path="/register"></Route>
+                <Route component={Update} path="/update"></Route>
                 <Route component={Main} path="/"></Route>
             </Switch>
         </Router>

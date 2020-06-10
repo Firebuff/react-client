@@ -4,6 +4,11 @@ export const postLogin = function (params) {
     // return post('/login', params)
     return post('/login', params)
 }
+
+export const updateUser = function (params) {
+    // return post('/login', params)
+    return post('/update', params)
+}
 export const registerApi = function (params) {
     return post('/register', {...params})
 }
