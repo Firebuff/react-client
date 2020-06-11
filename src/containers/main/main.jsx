@@ -15,6 +15,11 @@ import Cookies from 'js-cookie'
 import Employee from '@/containers/employee'
 import Boss from '@/containers/boss'
 
+import UserInfo from '@/containers/userinfo'
+
+
+
+
 class Main extends Component {
 	constructor () {
 		super()
@@ -35,7 +40,6 @@ class Main extends Component {
 	}
 
 	render () {
-		console.log(7)
 		// 给组件对象添加属性
 		let navList = [ // 包含所有导航组件的相关信息数据
 			{
@@ -71,7 +75,7 @@ class Main extends Component {
 		]
 
 		let currentPath = this.props.history.location.pathname
-		console.log(this.props)
+		// console.log(this.props)
 
 		let userType = this.props.user? this.props.user.type : ''
 
@@ -125,6 +129,7 @@ class Main extends Component {
 				<Switch>
 					<Route path="/dashen" component={Employee}></Route>
 					<Route path="/laoban" component={Boss}></Route>
+					<Route path="/personal" component={UserInfo}></Route>
 				</Switch>
 				<NavFooter navList={newNavList}></NavFooter>
 			</div>

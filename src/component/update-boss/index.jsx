@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 
 // ui 组件
 import { NavBar, Toast, Grid, InputItem, List,  WingBlank, WhiteSpace,  Button } from 'antd-mobile'; 
@@ -48,8 +49,16 @@ class UpdateBoss extends Component {
         this.props.history.replace('/')
     }
 
+    saveHandle () {
+        this.props.updateUserHandle(this.state.params).then( (res) => {
+            setTimeout(() => {
+                this.props.history.replace('/')
+            }, 1000)
+        })
+    }
+
     render () {
-        console.log(this.props)
+        // console.log(this.props)
         return (
             <div>
                 <NavBar>信息完善</NavBar>
@@ -112,7 +121,7 @@ class UpdateBoss extends Component {
                 <WhiteSpace />
                 <div style={{padding: '0 20px', marginTop: '10px'}}>
                     <div className="confirm">
-                        <Button type="primary">保存</Button>
+                        <Button type="primary" onClick={ () => {this.saveHandle()}}>保存</Button>
                     </div>
                 </div>
 
@@ -126,4 +135,4 @@ class UpdateBoss extends Component {
     }
 }
 
-export default connect(state => ({user: state.user}), {updateUserHandle}) (UpdateBoss)
+export default connect(() => ({}), {updateUserHandle}) (withRouter(UpdateBoss)) 

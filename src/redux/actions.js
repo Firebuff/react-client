@@ -75,7 +75,7 @@ export const login = (user) => {
             // 提示3秒后重定向
             setTimeout(() => {
                 dispatch(setRedirect('/update'))
-            }, 3000)
+            }, 1500)
         }
     }
 }
@@ -136,13 +136,14 @@ export const getUserInfo = () => {
 // 更新用户信息
 
 export const updateUserHandle = (params) => {
-    return async dispatch => {
-        let res = await updateUser(params)
-
-        dispatch(errorMsg(res.msg))
-
-        if (res.code == 1) {
-            dispatch(authSuccess(res.data))
-        } 
+    return function (dispatch) {
+        console.log(params)
+        return updateUser(params).then((res) => {
+            dispatch(errorMsg(res.msg))
+            Toast.success(res.msg, 1);
+            if (res.code == 1) {
+                dispatch(authSuccess(res.data))
+            } 
+        })
     }
 }

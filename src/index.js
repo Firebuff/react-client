@@ -11,7 +11,7 @@ import Login from '@/containers/login/login'
 import Main from '@/containers/main/main'
 import Register from '@/containers/register/register'
 
-import Update from '@/containers/userinfoUpdate/'
+import Update from '@/containers/update/'
 
 import Store from '@/redux/store'
 

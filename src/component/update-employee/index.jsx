@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 
 // ui 组件
 import { NavBar, Toast, Grid, InputItem, List,  WingBlank, WhiteSpace,  Button } from 'antd-mobile'; 
@@ -46,6 +47,14 @@ class UpdateEmployee extends Component {
 			selectedImg: require(`../../assets/images/头像${e.name.replace('头像','')}.png`),
 			params: params
 		})
+	}
+
+	saveHandle () {
+	    this.props.updateUserHandle(this.state.params).then( (res) => {
+	        setTimeout(() => {
+	            this.props.history.replace('/')
+	        }, 1000)
+	    })
 	}
 
 	render () {
@@ -107,7 +116,7 @@ class UpdateEmployee extends Component {
 				<WhiteSpace />
 				<div style={{padding: '0 20px', marginTop: '10px'}}>
 					<div className="confirm">
-						<Button type="primary">保存</Button>
+						<Button type="primary" onClick={ () => {this.saveHandle()}}>保存</Button>
 					</div>
 				</div>
 
@@ -122,4 +131,4 @@ class UpdateEmployee extends Component {
 	}
 }
 
-export default connect(state => ({user: state.user}), {updateUserHandle}) (UpdateEmployee)
+export default connect(() => ({}), {updateUserHandle}) (withRouter(UpdateEmployee)) 
